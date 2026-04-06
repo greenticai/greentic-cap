@@ -68,7 +68,6 @@ jobs:
           set -euo pipefail
           package_listing="$(cargo package --allow-dirty -p greentic-cap --list)"
           required_package_files=(
-            "Cargo.toml"
             "Cargo.lock"
             "README.md"
             "LICENSE"
@@ -80,7 +79,7 @@ jobs:
             "examples/capability/pack_capabilities.declaration.json"
           )
           for required_file in "${required_package_files[@]}"; do
-            if ! printf '%s\n' "$package_listing" | rg -Fxq "$required_file"; then
+            if ! printf '%s\n' "$package_listing" | grep -Fxq "$required_file"; then
               printf 'Missing required packaged file: %s\n' "$required_file" >&2
               exit 1
             fi

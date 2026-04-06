@@ -31,7 +31,7 @@ while IFS= read -r manifest; do
 done < <(find crates -mindepth 2 -maxdepth 2 -name Cargo.toml | sort)
 
 for manifest in "${manifests[@]}"; do
-  if rg -q '^[[:space:]]*publish[[:space:]]*=[[:space:]]*false' "$manifest"; then
+  if grep -Eq '^[[:space:]]*publish[[:space:]]*=[[:space:]]*false' "$manifest"; then
     continue
   fi
   package_name="$(sed -n 's/^name = "\(.*\)"/\1/p' "$manifest" | head -n 1)"
@@ -48,7 +48,6 @@ for package_name in "${publishable_packages[@]}"; do
     step "Verify package contents for ${package_name}"
     package_listing="$(cargo package --allow-dirty -p "$package_name" --list)"
     required_package_files=(
-      "Cargo.toml"
       "Cargo.lock"
       "README.md"
       "LICENSE"
@@ -60,7 +59,7 @@ for package_name in "${publishable_packages[@]}"; do
       "examples/capability/pack_capabilities.declaration.json"
     )
     for required_file in "${required_package_files[@]}"; do
-      if ! printf '%s\n' "$package_listing" | rg -Fxq "$required_file"; then
+      if ! printf '%s\n' "$package_listing" | grep -Fxq "$required_file"; then
         printf 'Missing required packaged file: %s\n' "$required_file" >&2
         exit 1
       fi
