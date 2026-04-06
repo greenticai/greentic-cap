@@ -1,0 +1,13 @@
+name: Rust Setup
+description: Configure the stable Rust toolchain and Cargo cache.
+
+runs:
+  using: composite
+  steps:
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        components: rustfmt, clippy
+
+    - name: Cache Cargo
+      uses: Swatinem/rust-cache@v2

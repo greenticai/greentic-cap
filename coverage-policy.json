@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "global": {
+    "line_coverage_min": 60.0
+  },
+  "defaults": {
+    "per_file_line_coverage_min": 60.0
+  },
+  "exclusions": {
+    "files": [
+      "src/main.rs",
+      "ci/local_check.sh",
+      ".github/workflows/ci.yml",
+      ".github/workflows/publish.yml",
+      "docs/**",
+      "examples/**"
+    ]
+  },
+  "per_file": {
+    "crates/greentic-cap-types/src/lib.rs": {
+      "line_coverage_min": 80.0
+    },
+    "crates/greentic-cap-schema/src/lib.rs": {
+      "line_coverage_min": 80.0
+    },
+    "crates/greentic-cap-profile/src/lib.rs": {
+      "line_coverage_min": 75.0
+    },
+    "crates/greentic-cap-resolver/src/lib.rs": {
+      "line_coverage_min": 85.0
+    },
+    "crates/greentic-cap-core/src/lib.rs": {
+      "line_coverage_min": 80.0
+    }
+  }
+}
