@@ -6,10 +6,9 @@ rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 description = "Profile expansion helpers for Greentic capability declarations."
-publish = false
 
 [dependencies]
-greentic-cap-types = { path = "../greentic-cap-types" }
+greentic-cap-types = { version = "0.5", path = "../greentic-cap-types" }
 schemars = { workspace = true }
 serde = { workspace = true }
 thiserror = { workspace = true }
