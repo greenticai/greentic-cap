@@ -6,11 +6,10 @@ rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 description = "Schemas and validation helpers for Greentic capability declarations."
-publish = false
 
 [dependencies]
-greentic-cap-types = { path = "../greentic-cap-types" }
-greentic-cap-resolver = { path = "../greentic-cap-resolver" }
+greentic-cap-types = { version = "0.5", path = "../greentic-cap-types" }
+greentic-cap-resolver = { version = "0.5", path = "../greentic-cap-resolver" }
 schemars = { workspace = true }
 serde = { workspace = true }
 serde_cbor = { workspace = true }

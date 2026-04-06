@@ -6,11 +6,10 @@ rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 description = "Deterministic Greentic capability resolution helpers."
-publish = false
 
 [dependencies]
-greentic-cap-profile = { path = "../greentic-cap-profile" }
-greentic-cap-types = { path = "../greentic-cap-types" }
+greentic-cap-profile = { version = "0.5", path = "../greentic-cap-profile" }
+greentic-cap-types = { version = "0.5", path = "../greentic-cap-types" }
 schemars = { workspace = true }
 serde = { workspace = true }
 thiserror = { workspace = true }

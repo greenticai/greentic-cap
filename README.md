@@ -17,18 +17,16 @@ runtime tooling.
 
 ## CI and Releases
 
-- `ci/local_check.sh` runs the local quality gate: format, clippy, tests, build, docs, and
-  packaging checks for publishable crates, including an assertion that the release package still
-  contains the docs and examples shipped with the workspace.
+- `ci/local_check.sh` runs the local quality gate: format, clippy, tests, build, and docs.
 - GitHub Actions provides:
   - `publish.yml` for pull requests, branch pushes, release verification, and crates.io publishing
   - `perf.yml` for lightweight performance and concurrency guards
   - `nightly-coverage.yml` for scheduled policy checks against `coverage-policy.json`
 - Release tags are expected to match the workspace package version, prefixed with `v`.
-- Pushes to `main` or `master` publish the root crate to crates.io, and a version that is
-  already published is treated as a successful no-op.
-- The published crate explicitly includes the README, license, source, docs, and example payloads
-  used by the capability layer.
+- Pushes to `main` or `master` publish the workspace crates to crates.io in dependency order, and
+  a version that is already published is treated as a successful no-op.
+- The published packages include the source and, for the root package, the README, license, docs,
+  and example payloads used by the capability layer.
 
 ## Performance
 

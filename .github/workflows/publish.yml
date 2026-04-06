@@ -114,22 +114,32 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          output=""
-          set +e
-          output="$(cargo publish --allow-dirty -p greentic-cap 2>&1)"
-          status=$?
-          set -e
-          if [ "$status" -eq 0 ]; then
-            printf '%s\n' "$output"
-            exit 0
-          fi
-          if printf '%s\n' "$output" | grep -Eiq 'already (exists|uploaded)|version .*already|crate .*already'; then
-            printf '%s\n' "$output"
-            printf 'crate version already exists on crates.io; treating as success\n'
-            exit 0
-          fi
-          printf '%s\n' "$output" >&2
-          exit "$status"
+          packages=(
+            greentic-cap-types
+            greentic-cap-profile
+            greentic-cap-resolver
+            greentic-cap-schema
+            greentic-cap-core
+            greentic-cap
+          )
+          for package in "${packages[@]}"; do
+            output=""
+            set +e
+            output="$(cargo publish --allow-dirty -p "$package" 2>&1)"
+            status=$?
+            set -e
+            if [ "$status" -eq 0 ]; then
+              printf '%s\n' "$output"
+              continue
+            fi
+            if printf '%s\n' "$output" | grep -Eiq 'already (exists|uploaded)|version .*already|crate .*already'; then
+              printf '%s\n' "$output"
+              printf '%s already exists on crates.io; treating as success\n' "$package"
+              continue
+            fi
+            printf '%s\n' "$output" >&2
+            exit "$status"
+          done
 
   publish-crates-release:
     needs: verify-release
@@ -155,19 +165,29 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          output=""
-          set +e
-          output="$(cargo publish --allow-dirty -p greentic-cap 2>&1)"
-          status=$?
-          set -e
-          if [ "$status" -eq 0 ]; then
-            printf '%s\n' "$output"
-            exit 0
-          fi
-          if printf '%s\n' "$output" | grep -Eiq 'already (exists|uploaded)|version .*already|crate .*already'; then
-            printf '%s\n' "$output"
-            printf 'crate version already exists on crates.io; treating as success\n'
-            exit 0
-          fi
-          printf '%s\n' "$output" >&2
-          exit "$status"
+          packages=(
+            greentic-cap-types
+            greentic-cap-profile
+            greentic-cap-resolver
+            greentic-cap-schema
+            greentic-cap-core
+            greentic-cap
+          )
+          for package in "${packages[@]}"; do
+            output=""
+            set +e
+            output="$(cargo publish --allow-dirty -p "$package" 2>&1)"
+            status=$?
+            set -e
+            if [ "$status" -eq 0 ]; then
+              printf '%s\n' "$output"
+              continue
+            fi
+            if printf '%s\n' "$output" | grep -Eiq 'already (exists|uploaded)|version .*already|crate .*already'; then
+              printf '%s\n' "$output"
+              printf '%s already exists on crates.io; treating as success\n' "$package"
+              continue
+            fi
+            printf '%s\n' "$output" >&2
+            exit "$status"
+          done
