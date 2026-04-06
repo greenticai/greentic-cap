@@ -104,25 +104,16 @@
   - Acts as the single developer entrypoint for local verification.
 - **Key dependencies / integration points:** Installed Rust toolchain, Cargo registry access for dry-run publishing.
 
-### `.github/workflows/ci.yml`
-- **Path:** `.github/workflows/ci.yml`
-- **Role:** Continuous integration workflow.
-- **Key functionality:**
-  - Runs formatting and clippy on push and pull request events.
-  - Runs the workspace test suite.
-  - Runs publishability checks for the root package.
-  - Asserts that the release package still contains the expected docs and examples.
-  - Uses shell-only package-content checks so the job does not depend on `rg` being installed on the runner.
-- **Key dependencies / integration points:** GitHub Actions, Rust toolchain, cargo cache.
-
 ### `.github/workflows/publish.yml`
 - **Path:** `.github/workflows/publish.yml`
-- **Role:** Release workflow.
+- **Role:** Combined CI and release workflow.
 - **Key functionality:**
-  - Verifies the release tag matches the workspace package version.
+  - Runs formatting and clippy checks on pull requests and branch pushes.
+  - Runs the workspace test suite on pull requests and branch pushes.
+  - Verifies the release tag matches the workspace package version on release events.
   - Runs `ci/local_check.sh` before release.
-  - Performs crates.io dry-run and real publish steps for the root package.
-- **Key dependencies / integration points:** GitHub Actions secrets, especially `CARGO_REGISTRY_TOKEN`.
+  - Publishes the root package to crates.io on tags or manual dispatch.
+- **Key dependencies / integration points:** GitHub Actions, Rust toolchain, cargo cache, and `CARGO_REGISTRY_TOKEN`.
 
 ### `.github/actions/rust-setup/action.yml`
 - **Path:** `.github/actions/rust-setup/action.yml`

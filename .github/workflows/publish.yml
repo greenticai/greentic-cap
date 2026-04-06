@@ -1,23 +1,65 @@
-name: Release
+name: Publish
 
 on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+    tags:
+      - "v*"
   workflow_dispatch:
     inputs:
       tag:
         description: "Release tag (must match v<package version>)"
         required: true
         type: string
-  push:
-    tags:
-      - "v*"
 
 concurrency:
-  group: release-${{ github.ref }}
+  group: publish-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  verify:
+  lint:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/'))
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - name: Cache Cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Format check
+        run: cargo fmt --all -- --check
+
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+
+  test:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/'))
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Test
+        run: cargo test --workspace --all-features
+
+  verify-release:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -51,7 +93,8 @@ jobs:
           fi
 
   publish-crates:
-    needs: verify
+    needs: verify-release
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     environment:
       name: crates-io
@@ -66,11 +109,6 @@ jobs:
 
       - name: Cache Cargo
         uses: Swatinem/rust-cache@v2
-
-      - name: Dry run publish
-        env:
-          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
-        run: cargo publish --dry-run --allow-dirty -p greentic-cap
 
       - name: Publish to crates.io
         env:
