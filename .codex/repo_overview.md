@@ -112,7 +112,8 @@
   - Runs the workspace test suite on pull requests and branch pushes.
   - Verifies the release tag matches the workspace package version on release events.
   - Runs `ci/local_check.sh` before release.
-  - Publishes the root package to crates.io on tags or manual dispatch.
+  - Publishes the root package to crates.io on pushes to `main`/`master` and on tags or manual dispatch.
+  - Treats an already-published version as a successful no-op so repeated pushes do not fail.
 - **Key dependencies / integration points:** GitHub Actions, Rust toolchain, cargo cache, and `CARGO_REGISTRY_TOKEN`.
 
 ### `.github/actions/rust-setup/action.yml`
