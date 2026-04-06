@@ -100,6 +100,7 @@
   - Runs workspace-wide `fmt`, `clippy`, `test`, `build`, and `doc` checks.
   - Packages and publish-dry-runs publishable crates, skipping crates with `publish = false`.
   - Verifies that the published root package still contains the README, license, source, docs, and example payloads needed for release readiness.
+  - Uses portable shell and `grep` for manifest/package checks so it works on GitHub runners without extra utilities.
   - Acts as the single developer entrypoint for local verification.
 - **Key dependencies / integration points:** Installed Rust toolchain, Cargo registry access for dry-run publishing.
 
@@ -111,6 +112,7 @@
   - Runs the workspace test suite.
   - Runs publishability checks for the root package.
   - Asserts that the release package still contains the expected docs and examples.
+  - Uses shell-only package-content checks so the job does not depend on `rg` being installed on the runner.
 - **Key dependencies / integration points:** GitHub Actions, Rust toolchain, cargo cache.
 
 ### `.github/workflows/publish.yml`
