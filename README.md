@@ -21,11 +21,12 @@ runtime tooling.
   packaging checks for publishable crates, including an assertion that the release package still
   contains the docs and examples shipped with the workspace.
 - GitHub Actions provides:
-  - `ci.yml` for pull requests and pushes to `main`/`master`
-  - `publish.yml` for release verification and crates.io publishing
+  - `publish.yml` for pull requests, branch pushes, release verification, and crates.io publishing
   - `perf.yml` for lightweight performance and concurrency guards
   - `nightly-coverage.yml` for scheduled policy checks against `coverage-policy.json`
 - Release tags are expected to match the workspace package version, prefixed with `v`.
+- Pushes to `main` or `master` publish the root crate to crates.io, and a version that is
+  already published is treated as a successful no-op.
 - The published crate explicitly includes the README, license, source, docs, and example payloads
   used by the capability layer.
 
