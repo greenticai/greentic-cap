@@ -1,0 +1,62 @@
+[workspace]
+members = [
+    "crates/greentic-cap-types",
+    "crates/greentic-cap-schema",
+    "crates/greentic-cap-core",
+    "crates/greentic-cap-profile",
+    "crates/greentic-cap-resolver",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.5.0"
+edition = "2024"
+rust-version = "1.91"
+license = "MIT"
+repository = "https://github.com/greenticai/greentic-cap"
+readme = "README.md"
+description = "Greentic capability workspace scaffold."
+homepage = "https://github.com/greenticai/greentic-cap"
+keywords = ["greentic", "capability", "workspace"]
+categories = ["development-tools"]
+include = [
+    "/Cargo.toml",
+    "/Cargo.lock",
+    "/README.md",
+    "/LICENSE",
+    "/src/**",
+    "/docs/**",
+    "/examples/**",
+]
+
+[workspace.dependencies]
+criterion = { version = "0.5", default-features = true }
+schemars = { version = "1", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_cbor = "0.11"
+thiserror = "2"
+
+[package]
+name = "greentic-cap"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+readme.workspace = true
+description.workspace = true
+
+[dependencies]
+
+[dev-dependencies]
+criterion = { workspace = true }
+greentic-cap-core = { path = "crates/greentic-cap-core" }
+greentic-cap-resolver = { path = "crates/greentic-cap-resolver" }
+greentic-cap-schema = { path = "crates/greentic-cap-schema" }
+greentic-cap-types = { path = "crates/greentic-cap-types" }
+serde_json = { workspace = true }
+
+[[bench]]
+name = "perf"
+harness = false
