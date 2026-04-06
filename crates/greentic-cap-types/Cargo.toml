@@ -6,7 +6,6 @@ rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 description = "Canonical Greentic capability data model."
-publish = false
 
 [dependencies]
 schemars = { workspace = true, optional = true }

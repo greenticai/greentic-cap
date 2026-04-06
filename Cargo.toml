@@ -9,7 +9,7 @@ members = [
 resolver = "2"
 
 [workspace.package]
-version = "0.5.0"
+version = "0.5.1"
 edition = "2024"
 rust-version = "1.91"
 license = "MIT"
@@ -51,10 +51,10 @@ description.workspace = true
 
 [dev-dependencies]
 criterion = { workspace = true }
-greentic-cap-core = { path = "crates/greentic-cap-core" }
-greentic-cap-resolver = { path = "crates/greentic-cap-resolver" }
-greentic-cap-schema = { path = "crates/greentic-cap-schema" }
-greentic-cap-types = { path = "crates/greentic-cap-types" }
+greentic-cap-core = { version = "0.5", path = "crates/greentic-cap-core" }
+greentic-cap-resolver = { version = "0.5", path = "crates/greentic-cap-resolver" }
+greentic-cap-schema = { version = "0.5", path = "crates/greentic-cap-schema" }
+greentic-cap-types = { version = "0.5", path = "crates/greentic-cap-types" }
 serde_json = { workspace = true }
 
 [[bench]]
