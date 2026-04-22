@@ -1,0 +1,27 @@
+name: Codex Semver Fix
+# Moved off pull_request onto a nightly schedule. See plans/binary-bifurcation.md
+# Phase A.4 (Wave 3). Manual runs remain available via workflow_dispatch.
+
+on:
+  schedule:
+    - cron: "22 3 * * *"
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to scan and patch (only for manual run)"
+        required: false
+        default: ""
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  semver-fix:
+    uses: greenticai/.github/.github/workflows/codex-semver-fix.yml@main
+    with:
+      branch: ${{ github.event.inputs.branch || '' }}
+    secrets: inherit
