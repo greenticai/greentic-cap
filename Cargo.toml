@@ -1,3 +1,7 @@
+bench = [
+    { name = "perf", harness = false },
+]
+
 [workspace]
 members = [
     "crates/greentic-cap-types",
@@ -9,7 +13,7 @@ members = [
 resolver = "2"
 
 [workspace.package]
-version = "0.5.2"
+version = "0.6.0-dev.0"
 edition = "2024"
 rust-version = "1.91"
 license = "MIT"
@@ -17,8 +21,14 @@ repository = "https://github.com/greenticai/greentic-cap"
 readme = "README.md"
 description = "Greentic capability workspace scaffold."
 homepage = "https://github.com/greenticai/greentic-cap"
-keywords = ["greentic", "capability", "workspace"]
-categories = ["development-tools"]
+keywords = [
+    "greentic",
+    "capability",
+    "workspace",
+]
+categories = [
+    "development-tools",
+]
 include = [
     "/Cargo.toml",
     "/Cargo.lock",
@@ -30,12 +40,25 @@ include = [
 ]
 
 [workspace.dependencies]
-criterion = { version = "0.5", default-features = true }
-schemars = { version = "1", features = ["derive"] }
-serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 serde_cbor = "0.11"
 thiserror = "2"
+
+[workspace.dependencies.criterion]
+version = "0.5"
+default-features = true
+
+[workspace.dependencies.schemars]
+version = "1"
+features = [
+    "derive",
+]
+
+[workspace.dependencies.serde]
+version = "1"
+features = [
+    "derive",
+]
 
 [package]
 name = "greentic-cap"
@@ -46,17 +69,26 @@ license.workspace = true
 repository.workspace = true
 readme.workspace = true
 description.workspace = true
-
 [dependencies]
 
-[dev-dependencies]
-criterion = { workspace = true }
-greentic-cap-core = { version = "0.5", path = "crates/greentic-cap-core" }
-greentic-cap-resolver = { version = "0.5", path = "crates/greentic-cap-resolver" }
-greentic-cap-schema = { version = "0.5", path = "crates/greentic-cap-schema" }
-greentic-cap-types = { version = "0.5", path = "crates/greentic-cap-types" }
-serde_json = { workspace = true }
+[dev-dependencies.criterion]
+workspace = true
 
-[[bench]]
-name = "perf"
-harness = false
+[dev-dependencies.greentic-cap-core]
+version = ">=0.6.0-dev, <0.7.0-0"
+path = "crates/greentic-cap-core"
+
+[dev-dependencies.greentic-cap-resolver]
+version = ">=0.6.0-dev, <0.7.0-0"
+path = "crates/greentic-cap-resolver"
+
+[dev-dependencies.greentic-cap-schema]
+version = ">=0.6.0-dev, <0.7.0-0"
+path = "crates/greentic-cap-schema"
+
+[dev-dependencies.greentic-cap-types]
+version = ">=0.6.0-dev, <0.7.0-0"
+path = "crates/greentic-cap-types"
+
+[dev-dependencies.serde_json]
+workspace = true

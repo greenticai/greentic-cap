@@ -7,13 +7,23 @@ license.workspace = true
 repository.workspace = true
 description = "Profile expansion helpers for Greentic capability declarations."
 
-[dependencies]
-greentic-cap-types = { version = "0.5", path = "../greentic-cap-types" }
-schemars = { workspace = true }
-serde = { workspace = true }
-thiserror = { workspace = true }
+[dependencies.greentic-cap-types]
+version = ">=0.6.0-dev, <0.7.0-0"
+path = "../greentic-cap-types"
+
+[dependencies.schemars]
+workspace = true
+
+[dependencies.serde]
+workspace = true
+
+[dependencies.thiserror]
+workspace = true
 
 [features]
-default = ["serde", "schemars"]
+default = [
+    "serde",
+    "schemars",
+]
 serde = []
 schemars = []

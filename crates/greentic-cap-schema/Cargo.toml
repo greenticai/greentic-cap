@@ -7,16 +7,33 @@ license.workspace = true
 repository.workspace = true
 description = "Schemas and validation helpers for Greentic capability declarations."
 
-[dependencies]
-greentic-cap-types = { version = "0.5", path = "../greentic-cap-types" }
-greentic-cap-resolver = { version = "0.5", path = "../greentic-cap-resolver" }
-schemars = { workspace = true }
-serde = { workspace = true }
-serde_cbor = { workspace = true }
-serde_json = { workspace = true }
-thiserror = { workspace = true }
+[dependencies.greentic-cap-types]
+version = ">=0.6.0-dev, <0.7.0-0"
+path = "../greentic-cap-types"
+
+[dependencies.greentic-cap-resolver]
+version = ">=0.6.0-dev, <0.7.0-0"
+path = "../greentic-cap-resolver"
+
+[dependencies.schemars]
+workspace = true
+
+[dependencies.serde]
+workspace = true
+
+[dependencies.serde_cbor]
+workspace = true
+
+[dependencies.serde_json]
+workspace = true
+
+[dependencies.thiserror]
+workspace = true
 
 [features]
-default = ["serde", "schemars"]
+default = [
+    "serde",
+    "schemars",
+]
 serde = []
 schemars = []
