@@ -21,7 +21,20 @@ jobs:
         uses: cargo-bins/cargo-binstall@main
 
       - name: Install coverage tools
-        run: cargo binstall --no-confirm --force greentic-dev cargo-nextest cargo-llvm-cov
+        env:
+          # Unauthenticated api.github.com lookups are rate-limited per runner IP.
+          # A 403 there makes binstall silently fall back to building from source,
+          # and that fallback runs `cargo install` without --locked, which nextest
+          # rejects with a compile_error!. Authenticate so the prebuilt is found,
+          # and disable the compile fallback so a lookup failure fails fast and
+          # loudly instead of after ~11 minutes of doomed compilation.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cargo binstall --no-confirm --force --disable-strategies compile \
+            greentic-dev cargo-nextest cargo-llvm-cov
+          command -v greentic-dev
+          command -v cargo-nextest
+          command -v cargo-llvm-cov
 
       - name: Run coverage policy check
         run: greentic-dev coverage

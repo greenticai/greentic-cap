@@ -28,7 +28,17 @@ jobs:
         uses: cargo-bins/cargo-binstall@main
 
       - name: Install perf tools
-        run: cargo binstall --no-confirm --force greentic-dev cargo-nextest cargo-llvm-cov
+        env:
+          # Same hardening as _reusable_coverage.yml: authenticate the release
+          # lookup so it is not rate-limited, and never let binstall degrade to
+          # building from source (that path cannot install nextest at all).
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cargo binstall --no-confirm --force --disable-strategies compile \
+            greentic-dev cargo-nextest cargo-llvm-cov
+          command -v greentic-dev
+          command -v cargo-nextest
+          command -v cargo-llvm-cov
 
       - name: Run perf guard tests
         run: cargo test --workspace --all-features --test perf_scaling --test perf_timeout
