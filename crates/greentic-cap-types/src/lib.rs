@@ -75,7 +75,7 @@ impl CapabilityId {
         }
 
         for (index, ch) in value.char_indices() {
-            if ch.is_ascii_alphanumeric() || matches!(ch, ':' | '/' | '-' | '_' | '.' | '+') {
+            if ch.is_ascii_alphanumeric() || matches!(ch, ':' | '/' | '-' | '_' | '.' | '+' | '@') {
                 continue;
             }
             return Err(CapabilityIdError::InvalidCharacter { ch, index });
@@ -786,6 +786,11 @@ mod tests {
     fn capability_id_requires_cap_scheme() {
         let err = CapabilityId::new("memory.short-term").unwrap_err();
         assert_eq!(err, CapabilityIdError::MissingScheme);
+    }
+
+    #[test]
+    fn capability_id_accepts_contract_major_version() {
+        assert!(CapabilityId::new("cap://example.echo@1").is_ok());
     }
 
     #[test]

@@ -1,0 +1,18 @@
+[package]
+name = "greentic-cap-runtime"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Provider-neutral executable capability binding and invocation contracts."
+
+[dependencies]
+greentic-cap-types = { version = ">=1.1.0-dev, <1.2.0-0", path = "../greentic-cap-types" }
+jsonschema.workspace = true
+schemars.workspace = true
+serde.workspace = true
+serde_cbor.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+thiserror.workspace = true
