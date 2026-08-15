@@ -9,6 +9,9 @@ members = [
     "crates/greentic-cap-core",
     "crates/greentic-cap-profile",
     "crates/greentic-cap-resolver",
+    "crates/greentic-cap-runtime",
+    "crates/greentic-cap-guest",
+    "crates/greentic-cap-wasmtime",
 ]
 resolver = "2"
 
@@ -42,10 +45,15 @@ include = [
 [workspace.dependencies]
 serde_json = "1"
 serde_cbor = "0.11"
+sha2 = "0.10"
+jsonschema = { version = "0.46", default-features = false }
+anyhow = "1"
+wasmtime = { version = "43", default-features = false, features = ["component-model", "cranelift", "runtime", "std"] }
+wit-bindgen = { version = "0.54", default-features = false, features = ["macros", "realloc"] }
 thiserror = "2"
 
 [workspace.dependencies.criterion]
-version = "0.5"
+version = "0.8"
 default-features = true
 
 [workspace.dependencies.schemars]
