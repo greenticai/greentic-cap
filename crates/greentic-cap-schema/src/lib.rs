@@ -9,6 +9,8 @@ use schemars::JsonSchema;
 use schemars::Schema;
 use serde::{Deserialize, Serialize};
 
+pub use greentic_cap_runtime::ExecutableBindingV1;
+
 pub use greentic_cap_types::{
     CapabilityBinding, CapabilityBindingKind, CapabilityComponentDescriptor,
     CapabilityComponentOperation, CapabilityConsume, CapabilityConsumeMode, CapabilityDeclaration,
@@ -292,6 +294,12 @@ pub struct CapabilityResolvedTargetV1 {
         serde(default, skip_serializing_if = "Vec::is_empty")
     )]
     pub bindings: Vec<CapabilityBindingEmissionV1>,
+    /// Immutable executable bindings installed in trusted runtime state.
+    #[cfg_attr(
+        feature = "serde",
+        serde(default, skip_serializing_if = "Vec::is_empty")
+    )]
+    pub executable_bindings: Vec<ExecutableBindingV1>,
 }
 
 /// Machine-readable bundle/setup resolution artifact.
@@ -617,6 +625,7 @@ pub fn target_from_resolution_report(
             .iter()
             .map(binding_emission_from_binding)
             .collect(),
+        executable_bindings: Vec::new(),
     }
 }
 
@@ -657,6 +666,23 @@ pub fn target_with_reference_policies(
 ) -> CapabilityResolvedTargetV1 {
     target.app_pack_policies = app_pack_policies;
     target
+}
+
+/// Appends already validated executable bindings to a resolved target artifact.
+///
+/// Bundle/setup remains responsible for digest pinning and constructing these records from
+/// trusted resolution inputs; this helper only provides the versioned handoff shape.
+pub fn target_with_executable_bindings(
+    mut target: CapabilityResolvedTargetV1,
+    executable_bindings: Vec<ExecutableBindingV1>,
+) -> Result<CapabilityResolvedTargetV1, CapabilitySchemaError> {
+    for binding in &executable_bindings {
+        binding
+            .validate()
+            .map_err(|error| CapabilitySchemaError::Compatibility(error.to_string()))?;
+    }
+    target.executable_bindings = executable_bindings;
+    Ok(target)
 }
 
 /// Convenience helper for constructing a resolved reference policy entry.

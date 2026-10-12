@@ -128,8 +128,8 @@
 - **Path:** `.github/workflows/perf.yml`
 - **Role:** Lightweight performance and concurrency workflow.
 - **Key functionality:**
-  - Triggers on pull requests and pushes to the main branches.
-  - Sets up Rust via the shared composite action and installs `greentic-dev` plus coverage tooling with `cargo-binstall`.
+  - Triggers on a nightly schedule and manual dispatch.
+  - Sets up Rust via the shared composite action and installs `greentic-dev` plus coverage tooling with `cargo-binstall`, authenticated with `GITHUB_TOKEN` and with the source-compile fallback disabled.
   - Runs the perf guard tests and a Criterion benchmark smoke pass.
 - **Key dependencies / integration points:** GitHub Actions, `cargo-binstall`, `greentic-dev`, Criterion.
 
@@ -146,7 +146,7 @@
 - **Role:** Reusable coverage check workflow.
 - **Key functionality:**
   - Sets up the Rust toolchain and Cargo cache.
-  - Installs `cargo-binstall` and the coverage tooling binaries.
+  - Installs `cargo-binstall` and the coverage tooling binaries. The install is authenticated with `GITHUB_TOKEN` to avoid anonymous GitHub API rate limits, and `--disable-strategies compile` keeps binstall from degrading to a source build (which cannot install `cargo-nextest` at all, since nextest refuses to build without `--locked`).
   - Runs `greentic-dev coverage` so policy violations fail the workflow.
 - **Key dependencies / integration points:** GitHub Actions reusable workflows, `cargo-binstall`, and the local coverage policy file.
 

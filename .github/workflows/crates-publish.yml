@@ -18,5 +18,5 @@ jobs:
   publish:
     uses: greenticai/.github/.github/workflows/crates-publish.yml@main
     with:
-      crates: "greentic-cap-types greentic-cap-profile greentic-cap-resolver greentic-cap-schema greentic-cap-core greentic-cap"
+      crates: "greentic-cap-types greentic-cap-guest greentic-cap-profile greentic-cap-resolver greentic-cap-runtime greentic-cap-schema greentic-cap-core greentic-cap-wasmtime greentic-cap"
     secrets: inherit

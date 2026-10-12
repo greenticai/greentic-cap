@@ -1,5 +1,9 @@
 # greentic-cap
 
+Provider-neutral capability declaration, deterministic resolution, and runtime contracts for Greentic.
+
+See [Dynamic capability invocation](docs/runtime_invocation.md) for the control-plane/data-plane boundary, trust model, binding lifecycle, authoring guidance, and runtime integration sequence.
+
 `greentic-cap` is the Greentic capability workspace scaffold. It starts as a small Rust
 workspace that will eventually hold the shared capability model, schema helpers, profile
 expansion logic, and deterministic resolution engine used across packs, bundles, setup, and
@@ -12,6 +16,9 @@ runtime tooling.
 - `crates/greentic-cap-profile` - profile expansion and normalization logic
 - `crates/greentic-cap-resolver` - deterministic capability resolution and conflict reporting
 - `crates/greentic-cap-core` - orchestration layer that expands and resolves declarations end to end
+- `crates/greentic-cap-runtime` - executable binding, invocation ABI, lifecycle, and audit contracts
+- `crates/greentic-cap-guest` - wasm32 guest bindings for the capability-client import
+- `crates/greentic-cap-wasmtime` - isolated Wasmtime linker adapter for capability-client
 - `docs/capability_outputs.md` - bundle/setup-oriented output shapes and downstream notes
 - `examples/capability/` - machine-readable examples for declarations, compatibility, and resolution
 
