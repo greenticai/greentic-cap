@@ -1,0 +1,12 @@
+[package]
+name = "greentic-cap-guest"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Guest bindings for the Greentic capability runtime client."
+include = ["src/**", "wit/**", "Cargo.toml"]
+
+[dependencies]
+wit-bindgen.workspace = true

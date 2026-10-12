@@ -28,5 +28,5 @@ jobs:
     uses: greenticai/.github/.github/workflows/dev-publish.yml@main
     with:
       version: ${{ needs.dev-prepare.outputs.version }}
-      crates: "greentic-cap-types greentic-cap-profile greentic-cap-resolver greentic-cap-schema greentic-cap-core greentic-cap"
+      crates: "greentic-cap-types greentic-cap-guest greentic-cap-profile greentic-cap-resolver greentic-cap-runtime greentic-cap-schema greentic-cap-core greentic-cap-wasmtime greentic-cap"
     secrets: inherit
