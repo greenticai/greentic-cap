@@ -644,7 +644,7 @@ dependencies = [
 
 [[package]]
 name = "greentic-cap"
-version = "1.2.0-dev.0"
+version = "1.2.0"
 dependencies = [
  "criterion",
  "greentic-cap-core",
@@ -656,7 +656,7 @@ dependencies = [
 
 [[package]]
 name = "greentic-cap-core"
-version = "1.2.0-dev.0"
+version = "1.2.0"
 dependencies = [
  "greentic-cap-profile",
  "greentic-cap-resolver",
@@ -668,14 +668,14 @@ dependencies = [
 
 [[package]]
 name = "greentic-cap-guest"
-version = "1.2.0-dev.0"
+version = "1.2.0"
 dependencies = [
  "wit-bindgen 0.54.0",
 ]
 
 [[package]]
 name = "greentic-cap-profile"
-version = "1.2.0-dev.0"
+version = "1.2.0"
 dependencies = [
  "greentic-cap-types",
  "schemars",
@@ -685,7 +685,7 @@ dependencies = [
 
 [[package]]
 name = "greentic-cap-resolver"
-version = "1.2.0-dev.0"
+version = "1.2.0"
 dependencies = [
  "greentic-cap-profile",
  "greentic-cap-types",
@@ -696,7 +696,7 @@ dependencies = [
 
 [[package]]
 name = "greentic-cap-runtime"
-version = "1.2.0-dev.0"
+version = "1.2.0"
 dependencies = [
  "greentic-cap-types",
  "jsonschema",
@@ -710,7 +710,7 @@ dependencies = [
 
 [[package]]
 name = "greentic-cap-schema"
-version = "1.2.0-dev.0"
+version = "1.2.0"
 dependencies = [
  "greentic-cap-resolver",
  "greentic-cap-runtime",
@@ -724,7 +724,7 @@ dependencies = [
 
 [[package]]
 name = "greentic-cap-types"
-version = "1.2.0-dev.0"
+version = "1.2.0"
 dependencies = [
  "schemars",
  "serde",
@@ -735,7 +735,7 @@ dependencies = [
 
 [[package]]
 name = "greentic-cap-wasmtime"
-version = "1.2.0-dev.0"
+version = "1.2.0"
 dependencies = [
  "greentic-cap-runtime",
  "wasmtime",
