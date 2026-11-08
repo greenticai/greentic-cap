@@ -30,8 +30,27 @@ jobs:
           # loudly instead of after ~11 minutes of doomed compilation.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cargo binstall --no-confirm --force --disable-strategies compile \
-            greentic-dev cargo-nextest cargo-llvm-cov
+          # Prebuilt downloads from GitHub can fail transiently (network flake),
+          # which aborted the nightly run before any test executed. Retry the
+          # install up to 3 times (20s, then 40s backoff) and fail with the last
+          # exit code if every attempt fails.
+          rc=0
+          for attempt in 1 2 3; do
+            rc=0
+            cargo binstall --no-confirm --force --disable-strategies compile \
+              greentic-dev cargo-nextest cargo-llvm-cov || rc=$?
+            if [ "$rc" -eq 0 ]; then
+              break
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              delay=$((attempt * 20))
+              echo "cargo binstall failed (exit $rc), attempt $attempt/3; retrying in ${delay}s"
+              sleep "$delay"
+            fi
+          done
+          if [ "$rc" -ne 0 ]; then
+            exit "$rc"
+          fi
           command -v greentic-dev
           command -v cargo-nextest
           command -v cargo-llvm-cov
